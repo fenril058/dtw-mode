@@ -1,5 +1,32 @@
-;; dtw-mode.el
-;; Last modified : 2016-01-17 02:10:40
+;;; dtw-mode.el --- yet another wc-mode -*- lexical-binding: t; -*-
+
+;; Copyright (C) 2016  ril
+
+;; Author: ril
+;; Created: 2016-01-15 23:00:00
+;; Last Modified: 2016-01-17 09:58:56
+;; Version: 1.0
+;; Keywords: convenience, mode line
+;; URL: https://github.com/fenril058/yawc-mode
+
+;; This program is free software; you can redistribute it and/or modify
+;; it under the terms of the GNU General Public License as published by
+;; the Free Software Foundation, either version 3 of the License, or
+;; (at your option) any later version.
+
+;; This program is distributed in the hope that it will be useful,
+;; but WITHOUT ANY WARRANTY; without even the implied warranty of
+;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;; GNU General Public License for more details.
+
+;; You should have received a copy of the GNU General Public License
+;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+;;; Commentary:
+
+;; A simple minor-mode to display the length of the buffer in the mode
+;; line. This is deeply based on the wc-mode which made by Toby
+;; Cubitt.  URL: http://www.dr-qubit.org/emacs.php
 
 (defgroup dtw nil
   "Show searched position in mode-line"
@@ -9,8 +36,17 @@
   "Lighter of dtw-mode"
   :type 'string)
 
+(defcustom dtw-use-disable-list t
+  "If nil, global-dtw-mode enables dtw-mode in the modes which
+are the member of `dtw-enable-modes'. If non-nil, global-dtw-mode
+enables dtw-mode in all modes except in `dtw-disable-modes'. "
+  :group 'dtw)
+
+(defvar dtw-enable-modes '(emacs-lisp-mode)
+  "Major modes which `dtw-mode' can run on.")
+
 (defvar dtw-disable-modes '(mew-draft-mode fundamental-mode)
-  "Major modes `dtw-mode' can not run on.")
+  "Major modes which `dtw-mode' can not run on.")
 
 ;;;###autoload
 (define-minor-mode dtw-mode
@@ -24,12 +60,13 @@ every time the buffer saved, auto matically run delete-trailing-whitespaceace"
       (add-hook 'before-save-hook 'delete-trailing-whitespace nil t)
     (remove-hook 'before-save-hook 'delete-trailing-whitespace t))
   )
-;;; write-file-functions と before-save-hook どちらがいいか
 
 (defun dtw-mode-maybe ()
   "What buffer `dtw-mode' prefers."
   (when (and (not (minibufferp (current-buffer)))
-             (not (memq major-mode dtw-disable-modes))
+             (if dtw-use-disable-list
+                 (not (memq major-mode dtw-disable-modes))
+               (memq major-mode dtw-enable-modes))
              (dtw-mode 1)
              )))
 
