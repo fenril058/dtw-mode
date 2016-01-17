@@ -1,13 +1,13 @@
-;;; dtw-mode.el --- yet another wc-mode -*- lexical-binding: t; -*-
+;;; dtw-mode.el --- delete trailing whitespace automatically -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2016  ril
 
 ;; Author: ril
 ;; Created: 2016-01-15 23:00:00
-;; Last Modified: 2016-01-17 09:58:56
+;; Last Modified: 2016-01-17 10:21:40
 ;; Version: 1.0
-;; Keywords: convenience, mode line
-;; URL: https://github.com/fenril058/yawc-mode
+;; Keywords: whitespace, convenience
+;; URL: https://github.com/fenril058/dtw-mode
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -24,9 +24,8 @@
 
 ;;; Commentary:
 
-;; A simple minor-mode to display the length of the buffer in the mode
-;; line. This is deeply based on the wc-mode which made by Toby
-;; Cubitt.  URL: http://www.dr-qubit.org/emacs.php
+;; A simple minor-mode to run delete-trailing-whitespace automatically
+;; when the buffers are saved.
 
 (defgroup dtw nil
   "Show searched position in mode-line"
