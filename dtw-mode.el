@@ -1,11 +1,11 @@
 ;;; dtw-mode.el --- delete trailing whitespace automatically -*- lexical-binding: t; -*-
 
-;; Copyright (C) 2016  ril
+;; Copyright (C) 2022  ril
 
 ;; Author: ril
 ;; Created: 2016-01-15 23:00:00
-;; Last Modified: 2016-01-17 10:21:40
-;; Version: 1.0
+;; Last Modified: 2022-06-28 17:59:09
+;; Version: 1.0.1
 ;; Keywords: whitespace, convenience
 ;; URL: https://github.com/fenril058/dtw-mode
 
@@ -27,32 +27,40 @@
 ;; A simple minor-mode to run delete-trailing-whitespace automatically
 ;; when the buffers are saved.
 
+;;; Code:
+
 (defgroup dtw nil
-  "Show searched position in mode-line"
+  "Show searched position in mode-line."
   :group 'whitespace)
 
 (defcustom dtw-mode-lighter " dtw"
-  "Lighter of dtw-mode"
-  :type 'string)
+  "Lighter of dtw-mode."
+  :type 'string
+  :group  'dtw)
 
 (defcustom dtw-use-disable-list t
-  "If nil, global-dtw-mode enables dtw-mode in the modes which
-are the member of `dtw-enable-modes'. If non-nil, global-dtw-mode
-enables dtw-mode in all modes except in `dtw-disable-modes'. "
+  "If nil, global-dtw-mode enables.
+dtw-mode in the modes which are the member of `dtw-enable-modes'.
+If non-nil, global-dtw-mode enables dtw-mode in all modes except
+in `dtw-disable-modes'."
+  :type 'boolean
   :group 'dtw)
 
-(defvar dtw-enable-modes '(emacs-lisp-mode)
-  "Major modes which `dtw-mode' can run on.")
+(defcustom dtw-enable-modes '(emacs-lisp-mode)
+  "Major modes which `dtw-mode' can run on."
+ :type 'list
+ :group 'dtw)
 
-(defvar dtw-disable-modes '(mew-draft-mode fundamental-mode)
-  "Major modes which `dtw-mode' can not run on.")
+(defcustom dtw-disable-modes '(mew-draft-mode fundamental-mode)
+  "Major modes which `dtw-mode' can not run on."
+  :type 'list
+  :group 'dtw)
 
 ;;;###autoload
 (define-minor-mode dtw-mode
   "Tggle dtw-mode.
-
-Dtw-mode is a minor mode. When enable,
-every time the buffer saved, auto matically run delete-trailing-whitespaceace"
+Dtw-mode is a minor mode.  When enable, every time the buffer saved,
+auto matically run delete-trailing-whitespaceace."
   :lighter dtw-mode-lighter
   :group 'dtw
   (if dtw-mode
@@ -75,3 +83,5 @@ every time the buffer saved, auto matically run delete-trailing-whitespaceace"
   :group 'dtw)
 
 (provide 'dtw-mode)
+
+;;; dtw-mode.el ends here
