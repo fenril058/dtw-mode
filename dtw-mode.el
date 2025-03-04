@@ -48,12 +48,12 @@ in `dtw-disable-modes'."
 
 (defcustom dtw-enable-modes '(emacs-lisp-mode)
   "Major modes which `dtw-mode' can run on."
- :type 'list
+  :type '(repeat (symbol))
  :group 'dtw)
 
 (defcustom dtw-disable-modes '(mew-draft-mode fundamental-mode)
   "Major modes which `dtw-mode' can not run on."
-  :type 'list
+  :type '(repeat (symbol))
   :group 'dtw)
 
 ;;;###autoload
@@ -70,12 +70,11 @@ auto matically run delete-trailing-whitespaceace."
 
 (defun dtw-mode-maybe ()
   "What buffer `dtw-mode' prefers."
-  (when (and (not (minibufferp (current-buffer)))
-             (if dtw-use-disable-list
-                 (not (memq major-mode dtw-disable-modes))
-               (memq major-mode dtw-enable-modes))
-             (dtw-mode 1)
-             )))
+  (and (not (minibufferp (current-buffer)))
+       (if dtw-use-disable-list
+           (not (memq major-mode dtw-disable-modes))
+         (memq major-mode dtw-enable-modes))
+       (dtw-mode 1)))
 
 ;;;###autoload
 (define-global-minor-mode global-dtw-mode
